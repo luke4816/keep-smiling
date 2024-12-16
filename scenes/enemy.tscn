@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dud8vf31hq0dn"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_funoy"]
+[ext_resource type="Texture2D" uid="uid://c7viai76xhhmq" path="res://assets/sprites/enemy.png" id="1_md5x1"]
+[ext_resource type="AudioStream" uid="uid://b8iv058oil85t" path="res://assets/sounds/hurt.wav" id="3_kk1aw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_en2bf"]
+radius = 32.0624
+
+[node name="Enemy" type="RigidBody2D" groups=["enemies"]]
+z_index = 2
+collision_layer = 2
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_funoy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_en2bf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visibility_layer = 4
+texture = ExtResource("1_md5x1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-32, -32, 64, 64)
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_kk1aw")
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="finished" from="DeathSound" to="." method="_on_death_sound_finished"]

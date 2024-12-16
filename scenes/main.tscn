@@ -1,0 +1,163 @@
+[gd_scene load_steps=12 format=3 uid="uid://lu64gxmn0ee3"]
+
+[ext_resource type="PackedScene" uid="uid://b8mam08jt0iq4" path="res://scenes/game_manager.tscn" id="1_te5au"]
+[ext_resource type="PackedScene" uid="uid://c1l2snt2hhlrd" path="res://scenes/spawner.tscn" id="1_vtcs3"]
+[ext_resource type="PackedScene" uid="uid://dud8vf31hq0dn" path="res://scenes/enemy.tscn" id="2_o8p6c"]
+[ext_resource type="Texture2D" uid="uid://dnsa4vs5u3ye0" path="res://assets/sprites/background.png" id="2_p2p4w"]
+[ext_resource type="PackedScene" uid="uid://bw2gvlfdo1ba0" path="res://scenes/player.tscn" id="3_hgftw"]
+[ext_resource type="PackedScene" uid="uid://d3fhwcyu6107q" path="res://scenes/line.tscn" id="3_i2gxt"]
+[ext_resource type="PackedScene" uid="uid://blewv4mxty5vl" path="res://scenes/goal.tscn" id="4_ajfmh"]
+[ext_resource type="PackedScene" uid="uid://dipqwvwyn1qsi" path="res://scenes/score_label.tscn" id="6_e0ji6"]
+[ext_resource type="Theme" uid="uid://by11pgrvdslc" path="res://theme.tres" id="7_vf30c"]
+[ext_resource type="PackedScene" uid="uid://d1bbxh2jhqua" path="res://scenes/coin.tscn" id="10_pygmf"]
+[ext_resource type="FontFile" uid="uid://b1dj0cwsttsge" path="res://assets/fonts/PixelOperator8.ttf" id="10_tndif"]
+
+[node name="Main" type="Node2D"]
+position = Vector2(0, -1)
+
+[node name="GameManager" parent="." instance=ExtResource("1_te5au")]
+
+[node name="DarkBackground" type="Sprite2D" parent="."]
+modulate = Color(0.172144, 0.453854, 0.555268, 1)
+z_index = -1
+position = Vector2(600, 50)
+scale = Vector2(19, 2)
+texture = ExtResource("2_p2p4w")
+
+[node name="LightBackground" type="Sprite2D" parent="."]
+modulate = Color(0.18605, 0.541934, 0.693672, 1)
+z_index = -1
+position = Vector2(600, 450)
+scale = Vector2(19, 11)
+texture = ExtResource("2_p2p4w")
+
+[node name="Lines" type="Node" parent="."]
+
+[node name="Line" parent="Lines" instance=ExtResource("3_i2gxt")]
+position = Vector2(600, 700)
+
+[node name="Line2" parent="Lines" instance=ExtResource("3_i2gxt")]
+position = Vector2(600, 500)
+
+[node name="Line3" parent="Lines" instance=ExtResource("3_i2gxt")]
+position = Vector2(600, 300)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(600, 400)
+
+[node name="Goal" parent="." instance=ExtResource("4_ajfmh")]
+position = Vector2(0, 100)
+
+[node name="Player" parent="." instance=ExtResource("3_hgftw")]
+position = Vector2(600, 700)
+limitX = Vector2(0, 1200)
+limitY = Vector2(100, 700)
+
+[node name="Spawner" parent="." node_paths=PackedStringArray("spawn_locations") instance=ExtResource("1_vtcs3")]
+enemy_scene = ExtResource("2_o8p6c")
+spawn_locations = [NodePath("SpawnLocation"), NodePath("SpawnLocation2"), NodePath("SpawnLocation3")]
+
+[node name="SpawnLocation" type="Node2D" parent="Spawner"]
+position = Vector2(-50, 200)
+
+[node name="SpawnLocation2" type="Node2D" parent="Spawner"]
+position = Vector2(1250, 400)
+rotation = 3.14159
+
+[node name="SpawnLocation3" type="Node2D" parent="Spawner"]
+position = Vector2(-50, 600)
+
+[node name="Coins" type="Node" parent="."]
+
+[node name="Coin" parent="Coins" instance=ExtResource("10_pygmf")]
+position = Vector2(300, 600)
+
+[node name="Coin2" parent="Coins" instance=ExtResource("10_pygmf")]
+position = Vector2(800, 600)
+
+[node name="Coin3" parent="Coins" instance=ExtResource("10_pygmf")]
+position = Vector2(600, 400)
+
+[node name="Coin4" parent="Coins" instance=ExtResource("10_pygmf")]
+position = Vector2(1000, 400)
+
+[node name="Coin5" parent="Coins" instance=ExtResource("10_pygmf")]
+position = Vector2(200, 200)
+
+[node name="Coin6" parent="Coins" instance=ExtResource("10_pygmf")]
+position = Vector2(1100, 200)
+
+[node name="UI" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1200.0
+offset_bottom = 84.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="Highscore" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
+theme = ExtResource("7_vf30c")
+theme_type_variation = &"HeaderMedium"
+theme_override_font_sizes/font_size = 40
+text = "HIGHSCORE: "
+
+[node name="highscore_label" parent="UI/VBoxContainer" instance=ExtResource("6_e0ji6")]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"HeaderMedium"
+theme_override_fonts/font = ExtResource("10_tndif")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 0
+
+[node name="score_label" parent="UI" instance=ExtResource("6_e0ji6")]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"HeaderLarge"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+alignment = 2
+
+[node name="CoinsText" type="Label" parent="UI/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("7_vf30c")
+theme_type_variation = &"HeaderMedium"
+theme_override_font_sizes/font_size = 40
+text = "COINS:"
+horizontal_alignment = 2
+
+[node name="current_coins_label" parent="UI/HBoxContainer2" instance=ExtResource("6_e0ji6")]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "0"
+
+[node name="Label2" type="Label" parent="UI/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("7_vf30c")
+theme_type_variation = &"HeaderMedium"
+text = "/"
+
+[node name="max_coins_label" parent="UI/HBoxContainer2" instance=ExtResource("6_e0ji6")]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "6"
+
+[connection signal="all_coins_picked" from="GameManager" to="Goal" method="_on_game_manager_all_coins_picked"]
+[connection signal="coin_picked" from="GameManager" to="UI/HBoxContainer2/current_coins_label" method="_on_value_changed"]
+[connection signal="coins_initialized" from="GameManager" to="UI/HBoxContainer2/max_coins_label" method="_on_value_changed"]
+[connection signal="highscore_changed" from="GameManager" to="UI/VBoxContainer/highscore_label" method="_on_value_changed"]
+[connection signal="score_changed" from="GameManager" to="UI/score_label" method="_on_value_changed"]
+[connection signal="goal_reached" from="Goal" to="GameManager" method="_on_goal_reached"]
+[connection signal="enemy_has_spawned" from="Spawner" to="GameManager" method="_on_spawner_enemy_has_spawned"]

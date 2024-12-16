@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://blewv4mxty5vl"]
+
+[ext_resource type="Script" path="res://scripts/goal.gd" id="1_yk2s6"]
+[ext_resource type="Texture2D" uid="uid://dnsa4vs5u3ye0" path="res://assets/sprites/background.png" id="2_1d5cv"]
+[ext_resource type="AudioStream" uid="uid://cfi6n06hiqpe4" path="res://assets/sounds/power_up.wav" id="3_3mni7"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_5nbke"]
+normal = Vector2(0, 1)
+
+[node name="Goal" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_yk2s6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_5nbke")
+
+[node name="GFX" type="Sprite2D" parent="."]
+position = Vector2(600, 0)
+scale = Vector2(19, 0.1)
+texture = ExtResource("2_1d5cv")
+
+[node name="FinishSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_3mni7")
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="FinishSound" to="." method="_on_finish_sound_finished"]

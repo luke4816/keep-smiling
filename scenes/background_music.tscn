@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4vwrlhfe5pc4"]
+
+[ext_resource type="AudioStream" uid="uid://b4r3si6wsswyi" path="res://assets/musics/Frogger.mp3" id="1_be6aw"]
+
+[node name="Music" type="AudioStreamPlayer"]
+stream = ExtResource("1_be6aw")
+autoplay = true
+bus = &"Music"
