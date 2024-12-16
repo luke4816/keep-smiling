@@ -42,8 +42,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_current_release.outputs.upload_url }}
-          asset_path: build/windows/${{ EXPORT_NAME }}.exe
-          asset_name: ${{ EXPORT_NAME }}.exe
+          asset_path: build/windows/$EXPORT_NAME.exe
+          asset_name: $EXPORT_NAME.exe
           asset_content_type: application/vnd.microsoft.portable-executable
 
 
@@ -79,8 +79,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_current_release.outputs.upload_url }}
-          asset_path: build/linux/${{ EXPORT_NAME }}.x86-64
-          asset_name: ${{ EXPORT_NAME }}.x86_64
+          asset_path: build/linux/$EXPORT_NAME.x86-64
+          asset_name: $EXPORT_NAME.x86_64
           asset_content_type: application/octet-stream
 
   export-web:
