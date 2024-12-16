@@ -1,7 +1,7 @@
 name: "Godot Build"
 on:
   release:
-    types: [created]
+    types: [prereleased]
 
 env:
   GODOT_VERSION: 4.3
